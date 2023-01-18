@@ -11,9 +11,6 @@ class AddressBook(UserDict):
     def delete_record(self, record):
         self.data.pop(record.name.value, None)
 
-    def show_record(self):
-        return self.data
-
 
 class Record:
 
@@ -26,19 +23,28 @@ class Record:
         if phone:
             self.phones.append(phone)
 
-    def add(self, new_number):
-        self.phones.append(new_number)
+    def add_phone(self, new_number):
+        if new_number not in self.phones:
+            self.phones.append(new_number)
+            return f"Phone number {new_number} has been created"
+        elif new_number in self.phones:
+            self.phones.append(new_number)
+            return f"Phone number {new_number} has been added"
+        else:
+            return f"Something went wrong. Please try again"
 
-    def edit(self, old_number, new_number):
+    def edit_phone(self, old_number, new_number):
         if old_number in self.phones:
             self.phones.remove(old_number)
             self.phones.append(new_number)
+            return f"Old number {old_number} successfully changed to new number {new_number}"
         else:
             return f"Phone number {old_number} is not found. Please try again"
 
-    def remove(self, old_number):
+    def remove_phone(self, old_number):
         if old_number in self.phones:
             self.phones.remove(old_number)
+            return f"Phone number {old_number} has been deleted"
         else:
             return f"Phone number {old_number} is not found. Please try again"
 
@@ -70,4 +76,3 @@ if __name__ == '__main__':
     assert ab['Bill'].phones[0].value == '1234567890'
 
     print('All Ok)')
-
